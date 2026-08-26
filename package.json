@@ -1,0 +1,32 @@
+{
+  "name": "repolet",
+  "version": "0.1.0",
+  "description": "Extract and copy a specific folder from a GitHub repository",
+  "main": "src/index.js",
+  "bin": {
+    "repolet": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "github",
+    "git",
+    "clone",
+    "folder",
+    "cli"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.9.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {
+    "repolet": "link:"
+  }
+}
