@@ -11,7 +11,45 @@ export function parseGitHubUrl(url) {
     throw new Error("Only github.com URLs are supported.");
   }
 
-  const parts = parsedUrl.pathname.split("/").filter(Boolean);
+  const parts = parsedUrl.pathname
+    .split("/")
+    .filter(Boolean);
+
+  if (parts.length < 2) {
+    throw new Error(
+      "Invalid GitHub URL. Expected /owner/repository"
+    );
+  }
+
+  const owner = parts[0];
+
+  // Remove .git if the user supplied:
+  // https://github.com/user/repo.git
+  const repo = parts[1].replace(/\.git$/, "");
+
+  // Whole repository:
+  //
+  // github.com/user/repo
+  //
+  if (parts.length === 2) {
+    return {
+      owner,
+      repo,
+      branch: null,
+      path: "",
+      type: "repository"
+    };
+  }
+
+  // Folder:
+  //
+  // github.com/user/repo/tree/main/src
+  //
+  if (parts[2] !== "tree") {
+    throw new Error(
+      "Only GitHub repository or folder URLs are supported."
+    );
+  }
 
   if (parts.length < 5) {
     throw new Error(
@@ -19,13 +57,8 @@ export function parseGitHubUrl(url) {
     );
   }
 
-  const [owner, repo, type, branch, ...pathParts] = parts;
-
-  if (type !== "tree") {
-    throw new Error(
-      "Only GitHub folder URLs are supported. Use /tree/<branch>/<folder>."
-    );
-  }
+  const branch = parts[3];
+  const pathParts = parts.slice(4);
 
   if (!branch) {
     throw new Error("GitHub branch is missing.");
@@ -39,6 +72,7 @@ export function parseGitHubUrl(url) {
     owner,
     repo,
     branch,
-    path: pathParts.join("/")
+    path: pathParts.join("/"),
+    type: "folder"
   };
 }

@@ -211,5 +211,17 @@ importers:
   .:
     dependencies:
       repolet:
-        specifier: 'link:'
-        version: 'link:'
+        specifier: file:/home/shivsingh/harikirat/repolet/repolet-0.1.0.tgz
+        version: file:repolet-0.1.0.tgz
+
+packages:
+
+  repolet@file:repolet-0.1.0.tgz:
+    resolution: {integrity: sha512-2x45EOHjIKmSSOz962zGGDtO5bPvDqoZUlP12z8nIsDICqS3ezO1nBgO6R4XXNz5i2XNX4GufkLU/a7ClRZI/A==, tarball: file:repolet-0.1.0.tgz}
+    version: 0.1.0
+    engines: {node: '>=18'}
+    hasBin: true
+
+snapshots:
+
+  repolet@file:repolet-0.1.0.tgz: {}

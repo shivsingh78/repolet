@@ -10,13 +10,9 @@ const VERSION = "0.1.0";
 const args = process.argv.slice(2);
 const cleanArgs = args.filter((arg) => arg !== "--");
 
-const showHelp =
-  cleanArgs.includes("--help") ||
-  cleanArgs.includes("-h");
+const showHelp = cleanArgs.includes("--help") || cleanArgs.includes("-h");
 
-const showVersion =
-  cleanArgs.includes("--version") ||
-  cleanArgs.includes("-v");
+const showVersion = cleanArgs.includes("--version") || cleanArgs.includes("-v");
 
 if (showHelp) {
   console.log(`
@@ -48,13 +44,9 @@ const githubUrl = cleanArgs[0];
 const customDestination = cleanArgs[1];
 
 if (!githubUrl) {
-  console.log(
-    "Usage: repolet <github-folder-url> [destination]"
-  );
+  console.log("Usage: repolet <github-folder-url> [destination]");
 
-  console.log(
-    "Run 'repolet --help' for more information."
-  );
+  console.log("Run 'repolet --help' for more information.");
 
   process.exit(1);
 }
@@ -68,15 +60,16 @@ try {
   console.log("\nRepository information:");
   console.log(`  Owner : ${folder.owner}`);
   console.log(`  Repo  : ${folder.repo}`);
-  console.log(`  Branch: ${folder.branch}`);
-  console.log(`  Path  : ${folder.path}`);
+  console.log(`  Type  : ${folder.type}`);
+  console.log(`  Branch: ${folder.branch || "default"}`);
+  console.log(`  Path  : ${folder.path || "/"}`);
 
   // --------------------------------
   // 2. Determine destination
   // --------------------------------
   const destinationRoot =
     customDestination ||
-    folder.path.split("/").pop();
+    (folder.type === "folder" ? folder.path.split("/").pop() : folder.repo);
 
   // --------------------------------
   // 3. Check destination
@@ -84,13 +77,9 @@ try {
   try {
     await fs.access(destinationRoot);
 
-    console.error(
-      `\n❌ Destination already exists: ./${destinationRoot}`
-    );
+    console.error(`\n❌ Destination already exists: ./${destinationRoot}`);
 
-    console.error(
-      "Choose another destination or remove the existing folder."
-    );
+    console.error("Choose another destination or remove the existing folder.");
 
     process.exit(1);
   } catch {
@@ -114,9 +103,7 @@ try {
   // --------------------------------
   // 5. Download
   // --------------------------------
-  console.log(
-    `\nDownloading to: ./${destinationRoot}\n`
-  );
+  console.log(`\nDownloading to: ./${destinationRoot}\n`);
 
   let successful = 0;
   let failed = 0;
@@ -127,11 +114,7 @@ try {
     const progress = `[${i + 1}/${files.length}]`;
 
     try {
-      const outputPath = await downloadFile(
-        file,
-        destinationRoot,
-        folder.path
-      );
+      const outputPath = await downloadFile(file, destinationRoot, folder.path);
 
       successful++;
 
@@ -139,9 +122,7 @@ try {
     } catch (error) {
       failed++;
 
-      console.error(
-        `✗ ${progress} ${file.path}`
-      );
+      console.error(`✗ ${progress} ${file.path}`);
 
       console.error(`  ${error.message}`);
     }
@@ -159,9 +140,7 @@ try {
   console.log(`Location  : ./${destinationRoot}`);
 
   if (failed > 0) {
-    console.log(
-      "\n⚠️ Some files could not be downloaded."
-    );
+    console.log("\n⚠️ Some files could not be downloaded.");
 
     process.exitCode = 1;
   } else {

@@ -1,11 +1,17 @@
 {
   "name": "repolet",
   "version": "0.1.0",
-  "description": "Extract and copy a specific folder from a GitHub repository",
+  "description": "Copy a complete GitHub repository or a specific folder directly to your local filesystem",
+  "type": "module",
   "main": "src/index.js",
   "bin": {
     "repolet": "src/index.js"
   },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "node src/index.js"
   },
@@ -13,20 +19,15 @@
     "github",
     "git",
     "clone",
-    "folder",
+    "github-folder",
+    "repository",
     "cli"
   ],
-  "author": "",
-  "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.9.0",
-      "onFail": "download"
-    }
+  "engines": {
+    "node": ">=18"
   },
-  "type": "module",
+  "license": "MIT",
   "dependencies": {
-    "repolet": "link:"
+    "repolet": "file:/home/shivsingh/harikirat/repolet/repolet-0.1.0.tgz"
   }
 }

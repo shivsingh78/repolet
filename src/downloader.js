@@ -6,19 +6,16 @@ export async function downloadFile(
   destinationRoot,
   sourceRoot
 ) {
-  // Remove the selected GitHub folder from the file path.
-  //
-  // Example:
-  // sourceRoot = "src"
-  // file.path  = "src/components/Nav/Nav.jsx"
-  //
-  // result:
-  // "components/Nav/Nav.jsx"
+  let relativePath;
 
-  const relativePath = path.relative(
-    sourceRoot,
-    file.path
-  );
+  if (sourceRoot) {
+    relativePath = path.relative(
+      sourceRoot,
+      file.path
+    );
+  } else {
+    relativePath = file.path;
+  }
 
   const outputPath = path.join(
     destinationRoot,
@@ -31,7 +28,9 @@ export async function downloadFile(
     recursive: true
   });
 
-  const response = await fetch(file.download_url);
+  const response = await fetch(
+    file.download_url
+  );
 
   if (!response.ok) {
     throw new Error(
@@ -43,7 +42,10 @@ export async function downloadFile(
     await response.arrayBuffer()
   );
 
-  await fs.writeFile(outputPath, buffer);
+  await fs.writeFile(
+    outputPath,
+    buffer
+  );
 
   return outputPath;
 }
