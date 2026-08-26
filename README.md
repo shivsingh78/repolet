@@ -1,129 +1,74 @@
 Repolet
 
-Copy a complete GitHub repository or a specific GitHub folder directly to your local filesystem.
+Copy a GitHub repository or any subfolder directly to your local machine.
 
-Repolet does not create a ZIP file and does not copy the .git history. It downloads the actual files into a normal local directory.
 
-Features
 
-Copy an entire GitHub repository
-
-Copy only a specific GitHub subfolder
-
-Support nested folders
-
-Preserve binary files such as PNG, PDF, MP3, SVG, etc.
-
-Custom destination folder
-
-Recursive file discovery
-
-GitHub token support
-
-Download progress
-
-Existing-folder protection
-
-Installation
-
-Using npm:
+🚀 Install
 
 npm install -g repolet
 
-Using pnpm:
-
-pnpm add -g repolet
-
-Or run directly with:
+Or use without installing:
 
 npx repolet <github-url>
 
-Usage
+📦 Usage
 
-Copy an entire repository
+Copy a repository:
 
-repolet https://github.com/user/repository
+repolet https://github.com/facebook/react
 
-For example:
+Copy a specific folder:
 
-repolet https://github.com/Devendradhote001/KODR4-React kodr-repo
+repolet https://github.com/expressjs/express/tree/master/lib
 
-Creates:
+Choose a destination:
 
-kodr-repo/
-├── public/
-├── src/
-├── package.json
-└── ...
+repolet https://github.com/expressjs/express/tree/master/lib my-lib
 
-Copy a specific folder
+✨ Features
 
-repolet https://github.com/user/repository/tree/main/src my-src
+Copy full repositories or selected folders
 
-For example:
+Recursively copy nested directories
 
-repolet https://github.com/shivsingh78/my-portfolio/tree/main/src my-portfolio-src
+Supports binary files such as PNG, PDF, MP3, and SVG
 
-Creates:
+Supports GitHub branches
 
-my-portfolio-src/
-├── App.jsx
-├── assets/
-├── components/
-├── index.css
-└── main.jsx
+Optional GITHUB_TOKEN authentication
 
-Destination is optional
+Protects existing destination folders
 
-repolet https://github.com/user/repository/tree/main/src
+No ZIP files and no .git history
 
-Repolet will use the selected folder name as the destination.
+🔐 Authentication
 
-GitHub Authentication
+Public repositories work without a token.
 
-Public repositories can be downloaded without authentication.
-
-For private repositories or higher GitHub API limits, set a GitHub fine-grained personal access token:
+For private repositories:
 
 export GITHUB_TOKEN="your_token"
 
-Then:
+Windows PowerShell:
 
-repolet https://github.com/user/private-repo private-repo
+$env:GITHUB_TOKEN="your_token"
 
-The token is read from:
+Use a GitHub fine-grained token with Contents: Read-only.
 
-GITHUB_TOKEN
-
-Repolet does not store the token.
-
-For a fine-grained token, use the minimum required repository permissions, such as:
-
-Contents → Read-only
-
-Options
+⚙️ Options
 
 repolet --help
 repolet --version
 
-Examples
+🧰 Requirements
 
-Copy a complete repository:
+Node.js 18+
 
-repolet https://github.com/user/repository
+Internet connection
 
-Copy a folder:
-
-repolet https://github.com/user/repository/tree/main/components
-
-Copy to a custom directory:
-
-repolet https://github.com/user/repository/tree/main/components ui-components
-
-Requirements
-
-Node.js 18 or newer
-
-License
+📄 License
 
 MIT
+
+Repolet — take the part of GitHub you actually need.
